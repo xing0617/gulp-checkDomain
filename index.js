@@ -12,12 +12,13 @@ function checkDomain(domain) {
         throw new PluginError(PLUGIN_NAME, 'Missing domain text!');
     }
     // 创建一个让每个文件通过的 stream 通道
-    var stream = through.obj(function(file, enc, cb) {
+    let stream = through.obj(function(file, enc, cb) {
         if (file.isBuffer()) {
-            var str = String(file.contents);
+            let title = String(file.relative),
+                str = String(file.contents);
             domain.map(function(item){
                 if(str.indexOf(item) > 0){
-                    gutil.log(chalk.red('包含写死域名'), item);
+                    gutil.log(chalk.yellow(title)+':'+chalk.red('包含写死域名,'), item);
                 }
             });
             return cb();
