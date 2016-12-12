@@ -15,12 +15,17 @@ function checkDomain(domain) {
     let stream = through.obj(function(file, enc, cb) {
         if (file.isBuffer()) {
             let title = String(file.relative),
-                str = String(file.contents);
+                str = String(file.contents),
+                flag = 0;
             domain.map(function(item){
                 if(str.indexOf(item) > 0){
                     gutil.log(chalk.yellow(title)+':'+chalk.red('包含写死域名,'), item);
+                    flag = 1;
                 }
             });
+            if(flag){
+                throw new PluginError(PLUGIN_NAME, chalk.red('存在写死域名'));
+            }
             return cb();
         }
         if (file.isStream()) {
