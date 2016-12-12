@@ -1,5 +1,5 @@
 {
-  "name": "gulp-checkDomain",
+  "name": "gulp-checkdomain",
   "version": "0.0.1",
   "description": "checkDomain",
   "main": "index.js",
